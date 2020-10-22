@@ -89,6 +89,7 @@ services:
       networks:
         - traefik
       image: ekoindarto/dataverse-cvm:5.0
+      #use image with baked in S3 config according to notion
       container_name: dataverse
       privileged: true
       ports:
@@ -122,6 +123,8 @@ services:
         - solr
       volumes:
         - dataverse-data:/usr/local/payara5/glassfish/domains/domain1/autodeploy
+        - /home/ubuntu/.aws:/opt/payara/.aws
+        - /home/ubuntu:/opt/payara/host
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.dataverse.rule=Host(`dataverse.${traefikhost}`)"
